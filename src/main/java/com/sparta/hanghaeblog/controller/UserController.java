@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class UserController {
 
     // 회원가입 API
     @PostMapping("/signup")
-    public String signup(SignupRequestDto signupRequestDto) {
+    public String signup(@Valid SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
 
