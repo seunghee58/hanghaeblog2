@@ -15,7 +15,7 @@ import javax.persistence.*;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        // unique = true : 유일성 조건 설정
+        // unique = true -> 유일성 조건 설정
         @Column(nullable = false, unique = true)
         private String username;
 

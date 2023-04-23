@@ -1,6 +1,5 @@
 package com.sparta.hanghaeblog.controller;
 
-import com.sparta.hanghaeblog.dto.PostDeleteDto;
 import com.sparta.hanghaeblog.dto.PostRequestDto;
 import com.sparta.hanghaeblog.dto.PostResponseDto;
 import com.sparta.hanghaeblog.entity.Post;
@@ -8,6 +7,7 @@ import com.sparta.hanghaeblog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -18,8 +18,8 @@ public class PostController {
 
     // Post 작성 API
     @PostMapping("/api/posts")
-    public PostResponseDto createPost(@RequestBody PostRequestDto requestDto) {  // 객체 형식으로 넘어오기 때문에 RequestBody를 사용
-        return postService.createPost(requestDto);
+    public PostResponseDto createPost(@RequestBody PostRequestDto requestDto, HttpServletRequest request) {  // 객체 형식으로 넘어오기 때문에 RequestBody를 사용
+        return postService.createPost(requestDto, request);
     }
 
     // 전체 Post 조회 API
@@ -36,17 +36,13 @@ public class PostController {
 
     // Post 수정 API
     @PutMapping("/api/posts/{id}")
-    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
-        return postService.updatepost(id,postRequestDto, postRequestDto.getPassword());
+    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, HttpServletRequest request) {
+        return postService.updatepost(id, requestDto, request);
     }
 
     // Post 삭제 API
     @DeleteMapping("/api/posts/{id}")
-    public PostDeleteDto deletePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
-        return postService.deletepost(id, postRequestDto.getPassword());
+    public String deletePost(@PathVariable Long id, HttpServletRequest request) {
+        return postService.deletepost(id, request);
     }
 }
-
-
-// status code;
-//
