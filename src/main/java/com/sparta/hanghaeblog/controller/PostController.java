@@ -42,7 +42,6 @@ public class PostController {
     }
 
     // Post 삭제 API
-    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/api/posts/{id}")
     public String deletePost(@PathVariable Long id, HttpServletRequest request) {
         return postService.deletepost(id, request);
