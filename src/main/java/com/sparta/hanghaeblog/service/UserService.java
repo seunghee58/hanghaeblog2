@@ -6,6 +6,7 @@ import com.sparta.hanghaeblog.entity.User;
 import com.sparta.hanghaeblog.jwt.JwtUtil;
 import com.sparta.hanghaeblog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,12 +34,14 @@ public class UserService {
 
             User user = new User(username, password);
             userRepository.save(user);
-            return "회원가입 성공";
-        }
+
+        return "{\"msg\":\"회원가입 성공\", \"statusCode\": " + HttpStatus.OK.value() + "}";
+
+    }
 
 
     @Transactional(readOnly = true)
-    public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public String login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
@@ -51,6 +54,9 @@ public class UserService {
         if(!user.getPassword().equals(password)){
             throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+        // JWT Token 생성
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
+
+        return "{\"msg\":\"로그인 성공\", \"statusCode\": " + HttpStatus.OK.value() + "}";
     }
 }

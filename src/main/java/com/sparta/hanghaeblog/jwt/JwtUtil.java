@@ -25,7 +25,6 @@ public class JwtUtil {
 
     // Header Authorization KEY 값
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String AUTHORIZATION_KEY = "auth";
     //Token 식별자,  토큰을 만들 때 앞에 붙어서 들어감
     private static final String BEARER_PREFIX = "Bearer ";
     // 토큰 만료시간

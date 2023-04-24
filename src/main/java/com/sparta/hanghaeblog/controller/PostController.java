@@ -5,6 +5,7 @@ import com.sparta.hanghaeblog.dto.PostResponseDto;
 import com.sparta.hanghaeblog.entity.Post;
 import com.sparta.hanghaeblog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class PostController {
 
     // 전체 Post 조회 API
     @GetMapping("/api/posts")
-    public List<Post> getPosts() {
+    public List<PostResponseDto> getPosts() {
         return postService.getPosts();
     }
 
@@ -41,6 +42,7 @@ public class PostController {
     }
 
     // Post 삭제 API
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/api/posts/{id}")
     public String deletePost(@PathVariable Long id, HttpServletRequest request) {
         return postService.deletepost(id, request);

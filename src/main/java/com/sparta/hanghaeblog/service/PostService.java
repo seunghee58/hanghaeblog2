@@ -9,10 +9,12 @@ import com.sparta.hanghaeblog.repository.PostRepository;
 import com.sparta.hanghaeblog.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +32,10 @@ public class PostService {
         // 토큰 체크 추가
         User user = checkToken(request);
 
+        if (user == null) {
+            throw new IllegalArgumentException("인증되지 않은 사용자입니다.");
+        }
+
         Post post = new Post(requestDto, user);
         postRepository.save(post);
         return new PostResponseDto(post);
@@ -37,9 +43,18 @@ public class PostService {
 
     // 전체 Post 조회
     @Transactional
-    public List<Post> getPosts() {
-        return postRepository.findAllByOrderByModifiedAtDesc();
-    } // 내림차순 정렬
+    public List<PostResponseDto> getPosts() {
+        List<Post> posts = postRepository.findAllByOrderByModifiedAtDesc();
+        List<PostResponseDto> postResponseDto = new ArrayList<>();
+
+        for (Post post : posts) {
+            postResponseDto.add(new PostResponseDto(post));
+        }
+
+        return postResponseDto;
+    }
+
+
 
     // 선택 Post 조회
     @Transactional(readOnly = true)
@@ -58,9 +73,17 @@ public class PostService {
         // 토큰 체크 추가
         User user = checkToken(request);
 
+        if(user == null) {
+            throw new IllegalArgumentException("인증되지 않은 사용자입니다.");
+        }
+
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 글이 존재하지 않습니다.")
         );
+
+        if (!post.getUser().equals(user)) {
+            throw new IllegalArgumentException("글 작성자가 아닙니다.");
+        }
 
         post.update(requestDto);
         return new PostResponseDto(post);
@@ -73,12 +96,18 @@ public class PostService {
         // 토큰 체크 추가
         User user = checkToken(request);
 
+        if (user == null) {
+            throw new IllegalArgumentException("인증되지 않은 사용자입니다.");
+        }
+
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 글이 존재하지 않습니다.")
         );
 
-        postRepository.delete(post);
-        return "삭제 성공.";
+        if (post.getUser().equals(user)) {
+            postRepository.delete(post);
+        }
+        return "{\"msg\":\"게시글 삭제 성공\", \"statusCode\": " + HttpStatus.OK.value() + "}";
 
     }
 

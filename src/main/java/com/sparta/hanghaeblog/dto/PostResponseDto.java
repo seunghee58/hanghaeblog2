@@ -10,14 +10,16 @@ public class PostResponseDto { // 게시물 조회 요청에 대한 응답으로
     private long id;
     private String title;
     private String contents;
+    private String username;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    // id와 password는 보여주지 않도록 함
+    // password는 보여주지 않도록 함
 
     public PostResponseDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.contents = post.getContents();
+        this.username = post.getUser().getUsername();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
     }
