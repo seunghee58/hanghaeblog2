@@ -2,10 +2,8 @@ package com.sparta.hanghaeblog.controller;
 
 import com.sparta.hanghaeblog.dto.PostRequestDto;
 import com.sparta.hanghaeblog.dto.PostResponseDto;
-import com.sparta.hanghaeblog.entity.Post;
 import com.sparta.hanghaeblog.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

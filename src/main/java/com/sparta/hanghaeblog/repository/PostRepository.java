@@ -1,6 +1,5 @@
 package com.sparta.hanghaeblog.repository;
 
-import com.sparta.hanghaeblog.dto.PostResponseDto;
 import com.sparta.hanghaeblog.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

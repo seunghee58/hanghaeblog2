@@ -4,7 +4,6 @@ import com.sparta.hanghaeblog.dto.LoginRequestDto;
 import com.sparta.hanghaeblog.dto.SignupRequestDto;
 import com.sparta.hanghaeblog.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
