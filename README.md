@@ -35,6 +35,7 @@ Goal:  "회원가입, 로그인 기능이 추가된 나만의 항해 블로그 �
     - 선택한 게시글을 삭제하고 Client 로 성공했다는 메시지, 상태코드 반환하기
 # ➿ Use Case
 
+<img width="301" alt="스크린샷 2023-04-25 152526" src="https://user-images.githubusercontent.com/129656095/234191920-4ecb2089-845c-4681-8f08-10353138d96e.png">
 
 # ➿ API 명세서
 https://teamsparta.notion.site/c7ae5aacae2b4d11b81c8985744b4859?v=94fc5192ca2f4d538b50ce12a2b46daa
