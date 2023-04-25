@@ -91,7 +91,7 @@ public class PostService {
 
     // Post 삭제
     @Transactional
-    public String deletepost (Long id, HttpServletRequest request) {
+    public void deletepost (Long id, HttpServletRequest request) {
 
         // 토큰 체크 추가
         User user = checkToken(request);
@@ -107,8 +107,6 @@ public class PostService {
         if (post.getUser().equals(user)) {
             postRepository.delete(post);
         }
-        return "{\"msg\":\"게시글 삭제 성공\", \"statusCode\": " + HttpStatus.OK.value() + "}";
-
     }
 
     public User checkToken(HttpServletRequest request){

@@ -6,7 +6,6 @@ import com.sparta.hanghaeblog.entity.User;
 import com.sparta.hanghaeblog.jwt.JwtUtil;
 import com.sparta.hanghaeblog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +20,7 @@ public class UserService {
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public String signup(SignupRequestDto signupRequestDto) {
+    public User signup(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
         String password = signupRequestDto.getPassword();
 
@@ -33,9 +32,7 @@ public class UserService {
             }
 
             User user = new User(username, password);
-            userRepository.save(user);
-
-        return "{\"msg\":\"회원가입 성공\", \"statusCode\": " + HttpStatus.OK.value() + "}";
+            return userRepository.save(user);
 
     }
 
@@ -54,9 +51,10 @@ public class UserService {
         if(!user.getPassword().equals(password)){
             throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        // JWT Token 생성
+        // JWT Token 생성 및 반환
+//        return jwtUtil.createToken(user.getUsername());
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
 
-        return "{\"msg\":\"로그인 성공\", \"statusCode\": " + HttpStatus.OK.value() + "}";
+        return username;
     }
 }

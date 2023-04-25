@@ -1,9 +1,11 @@
 package com.sparta.hanghaeblog.controller;
 
+import com.sparta.hanghaeblog.dto.ApiResult;
 import com.sparta.hanghaeblog.dto.PostRequestDto;
 import com.sparta.hanghaeblog.dto.PostResponseDto;
 import com.sparta.hanghaeblog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +43,9 @@ public class PostController {
 
     // Post 삭제 API
     @DeleteMapping("/api/posts/{id}")
-    public String deletePost(@PathVariable Long id, HttpServletRequest request) {
-        return postService.deletepost(id, request);
+    public ApiResult deletePost(@PathVariable Long id, HttpServletRequest request) {
+        postService.deletepost(id, request);
+        return new ApiResult("게시글 삭제 성공", HttpStatus.OK.value()); // 게시글 삭제 성공시 ApiResult Dto를 사용하여 성공메세지와 statusCode를 띄움
     }
+
 }

@@ -26,7 +26,12 @@ public class Post extends Timestamped { // 타임스탬프는 포스트 entity�
     private String username;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    // 매핑하려는 객체가 다대일(N:1) 관계. 즉, 이 코드에서는 현재 클래스의 인스턴스가 다수의 User의 객체 중 하나에 매핑 될 수 있음
+    // fecth는 속성을 Eager과 Lazy로 설정 가능. Lazy로 설정할 경우 객체를 실제로 필요한 순간에 가져오게 함
     @JoinColumn(name = "user_id",referencedColumnName = "id", insertable = true, updatable = true)
+    // JoinColumn 어노테이션은 외래키(FK)를 지정하는데 사용.
+    // 이 코드에서는 user_id 컬럼이 외래 키 역할을 하며 참조되는 user 클래스의 id 필드와 매핑 됨
+    // referencedColumnName = 외래키가 참조하는 컬럼명, insertable,updatable = 해당 엔티티가 DB에 삽입,수정될 때 외래 키 열도 함께 변경 가능 여부를 나타냄
     private User user;
 
 
@@ -38,8 +43,6 @@ public class Post extends Timestamped { // 타임스탬프는 포스트 entity�
         this.user = user;
         this.username = user.getUsername();
     }
-
-
 
 
     // Post Entity의 필드 값을 해당 객체의 필드 값으로 변경, 즉 게시글을 수정하고 업데이트함
